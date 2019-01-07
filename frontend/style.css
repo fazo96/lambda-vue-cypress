@@ -1,0 +1,15 @@
+#app {
+  display: block;
+  margin: auto;
+}
+
+#image {
+  display: block;
+  margin: auto;
+}
+
+.container {
+  display: block;
+  margin: auto;
+  max-width: 300px;
+}

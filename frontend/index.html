@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>Image Resize Demo</title>
+    <link rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+    <div id="app">
+      <img id='image' :src="imageSrc" @load="updateImageInfo" />
+      <div class="container">
+        <label for="input-image">Select an Image</label>
+        <input id="input-image" type="file" accept="image/*" @change="fileChanged" />
+        <label for="width">Target Width</label>
+        <input id="width" placeholder="..." v-model="width">
+        <button id="process-image" @click="resize">Resize</button>
+        <button id="process-image" @click="resetWidth">Default</button>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="frontend.js"></script>
+  </body>
+</html>

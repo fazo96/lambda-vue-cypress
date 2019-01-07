@@ -1,0 +1,17 @@
+{
+  "name": "lambda-vue-cypress",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "cypress run",
+    "cypress": "cypress open"
+  },
+  "author": "Enrico Fasoli <enrico.fasoli1996@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cypress": "^3.1.4",
+    "express": "^4.16.4"
+  }
+}
