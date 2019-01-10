@@ -5,39 +5,59 @@ const app = window.vueApp = new Vue({
   data: {
     width: 0,
     file: null,
+    result: null,
+    resultSrc: null,
     imageSrc: null,
-    image: null
+    imageInfo: null
   },
   methods: {
     resize () {
       console.log(`resize, width ${this.width}`)
       const req = new XMLHttpRequest()
-      const url = `${apiUrl}?width=${this.width}`
-      req.open('POST', apiUrl, true)
-      //req.setRequestHeader("Content-type", "image/png")
+      const url = `${apiUrl}?width=${this.width}&height=`
+      req.responseType = 'blob'
+      req.open('POST', url, true)
+      req.setRequestHeader("Content-type", "image/png")
       req.onreadystatechange = () => {
         console.log('state changed', req)
       }
       req.onload = e => {
         console.log('done', e)
+        console.log(req.responseType, typeof req.response)
+        this.result = req.response
+        console.log('result updated to', this.result)
+        const reader = new FileReader()
+        reader.onload = e => {
+          this.resultSrc = e.target.result
+          console.log('resultSrc updated to', this.resultSrc)
+        }
+        reader.readAsDataURL(this.result)
       }
       req.send(this.file)
     },
 
-    resetWidth () {
-      this.width = this.image.width
+    reset () {
+      this.width = this.imageInfo.width
+      this.result = null
+      this.resultSrc = null
+    },
+
+    download () {
+      if (this.result) saveBlob(this.result, 'result.png')
     },
 
     updateImageInfo (e) {
-      this.image = {
+      this.imageInfo = {
         height: e.target.height,
         width: e.target.width
       }
-      this.width = this.image.width
+      this.width = this.imageInfo.width
     },
 
     fileChanged(event) {
       console.log('file changed', event)
+      this.result = null
+      this.resultSrc = null
       if (event.target.files && event.target.files.length > 0) {
         this.file = event.target.files[0]
         console.log('file updated to', this.file)
@@ -54,3 +74,18 @@ const app = window.vueApp = new Vue({
     }
   }
 })
+
+function saveBlob (blob, fileName) {
+  var a = document.getElementById('downloader')
+  if (!a) {
+    a = document.createElement("a");
+    a.setAttribute('id', 'downloader')
+    document.body.appendChild(a);
+    a.style = "display: none";
+  }
+  var url = window.URL.createObjectURL(blob);
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  window.URL.revokeObjectURL(url);
+}

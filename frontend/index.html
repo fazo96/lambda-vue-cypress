@@ -5,14 +5,16 @@
   </head>
   <body>
     <div id="app">
-      <img id='image' :src="imageSrc" @load="updateImageInfo" />
+      <img id='image' :src="imageSrc" @load="updateImageInfo" v-if="!resultSrc"/>
+      <img id='result' :src="resultSrc" v-if="resultSrc"/>
       <div class="container">
         <label for="input-image">Select an Image</label>
         <input id="input-image" type="file" accept="image/*" @change="fileChanged" />
         <label for="width">Target Width</label>
-        <input id="width" placeholder="..." v-model="width">
-        <button id="process-image" @click="resize">Resize</button>
-        <button id="process-image" @click="resetWidth">Default</button>
+        <input id="width" placeholder="..." v-model="width" :disabled="!file" />
+        <button id="process-image" @click="resize" :disabled="!file">Resize</button>
+        <button id="reset" @click="reset" :disabled="!file">Default</button>
+        <button id="download" @click="download" :disabled="!result">Download</button>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

@@ -3,7 +3,7 @@
   margin: auto;
 }
 
-#image {
+img {
   display: block;
   margin: auto;
 }
@@ -12,4 +12,13 @@
   display: block;
   margin: auto;
   max-width: 300px;
+}
+
+input {
+  width: 100%;
+  margin: 5px 0 10px 0;
+}
+
+label {
+  font-size: 1.2em;
 }
