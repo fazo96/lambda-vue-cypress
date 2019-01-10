@@ -59,7 +59,15 @@ const app = window.vueApp = new Vue({
       this.result = null
       this.resultSrc = null
       if (event.target.files && event.target.files.length > 0) {
-        this.file = event.target.files[0]
+        this.setFile(event.target.files[0])
+      } else {
+        this.setFile(null)
+      }
+    },
+
+    setFile(file) {
+      if (file) {
+        this.file = file
         console.log('file updated to', this.file)
         const reader = new FileReader()
         reader.onload = e => {
