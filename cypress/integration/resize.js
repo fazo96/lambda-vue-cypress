@@ -7,8 +7,7 @@ describe('Image Resize', () => {
   it('resize a picture', () => {
     cy.fixture('avatar.jpeg').as('image')
     cy.visit('/')
-      // Select input Image
-      .fixture('avatar.jpeg').then(setImageInApp)
+      .uploadFile('#input-image', 'avatar.jpeg')
       .wait(1000)
       .get('#image').invoke('width').should('equal', 302)
       .get('#width')
@@ -22,14 +21,3 @@ describe('Image Resize', () => {
       .get('#result').invoke('width').should('equal', 100)
   })
 })
-
-// Function to select the Image in the App
-// needed because cypress does not support using <input type='file'> yet
-// https://github.com/cypress-io/cypress/issues/170
-function setImageInApp(image) {
-  return Cypress.Blob.base64StringToBlob(image, 'image/jpeg')
-    .then(blob => {
-      const file = new File([blob], 'avatar.jpeg', { type: 'image/jpeg' })
-      return cy.window().then(w => w.vueApp.setFile(file))
-    })
-}
