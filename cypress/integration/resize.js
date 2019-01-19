@@ -5,10 +5,8 @@ describe('Image Resize', () => {
   })
 
   it('resize a picture', () => {
-    cy.fixture('avatar.jpeg').as('image')
     cy.visit('/')
       .uploadFile('#input-image', 'avatar.jpeg')
-      .wait(1000)
       .get('#image').invoke('width').should('equal', 302)
       .get('#width')
         // Check that the default Width is loaded correctly
@@ -17,7 +15,6 @@ describe('Image Resize', () => {
         .clear()
         .type('100')
       .get('#process-image').click()
-      .wait(1000)
       .get('#result').invoke('width').should('equal', 100)
   })
 })
